@@ -1,11 +1,10 @@
 from values import initialise
-channel_id, token, pfp, message_id = initialise()
+channel_id, token, pfp, message_id, emoji_id, guild_id, role_id = initialise()
 # importing
 
 import frenchcord
 print('import')
 # embed
-
 embed = frenchcord.Embed(titre="Testing Embed", description="Testing description", couleur=0xad1457)
 embed.set_footer('I\'m a footer', icon_url=pfp)
 embed.set_image(pfp)
@@ -27,20 +26,27 @@ print('client')
 message = frenchcord.zaza.get_message(message_id, channel_id)
 message.channel().send(contenu='Online', embeds=[embed], data=False)
 print('message + channel')
-
+frenchcord.zaza.get_emoji(guild_id, emoji_id)
+print('emoji')
+frenchcord.zaza.get_role(role_id, guild_id)
+print('role')
 guild = message.channel().guild()
 print('guild')
 @client.event('on_ready')
 def ptonline():
   print('online')
+  
 print('event handler')
 @client.event('message')
 def cmd(message):
   if message.author.id == client.me.id: return
+  print(message)
+  print(f'{message.content}')
   client.process_commands(message)
 
 @client.command()
 def hi(ctx):
   ctx.send('WORKING')
 print('command handler')
+  
 client.connexion(['?'], True)
